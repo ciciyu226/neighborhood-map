@@ -2,7 +2,8 @@
 /* google map api */
 var map;
 var geocoder;
-var j = 0;
+var id = "JA1JE1NA11LXQTLLHAOEE4UDLVJF24C10ZROEBUAOGHIXRCH";
+var secret = "J21KG3AIBBI4E4XG4V04LKUTM4PTG32N34XC40ADSYPZUF0E";
 /* Function that initialize the map with existing locations in database*/
 function initMap () {
     geocoder = new google.maps.Geocoder;
@@ -19,27 +20,30 @@ function initMap () {
     clearTimeout(mapRequestTimeout);
     for(var i = 0; i < locationModel.length; i++){
         $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='
-          +locationModel[i].title+'&sensor=false', null, function (data, status) {
+          +locationModel[i]+'&sensor=false', null, function (data, status) {
             if(status == 'success'){
-                var p = data.results[0].geometry.location;
+                var result = data.results[0];
+                var p = result.geometry.location;
                 var latlng = new google.maps.LatLng(p.lat, p.lng);
                 map.setCenter(latlng);
+
+
+                //console.log(toAppend);
                 /* create info window for current business */
-                var infowindow = new google.maps.InfoWindow({
-                    content: "test"  //fill it with yelp info
-                });
+                var infowindow = new google.maps.InfoWindow();
                 /* create marker for current business */
                 var marker = new google.maps.Marker({
                     position: latlng,
                     map: map
                 });
+
                 /* window pops up when user click marker */
                 marker.addListener('click', function(){
                 infowindow.open(map, marker);
                 });
-                console.log(j);
-                getYelpInfo(j);
-                j++;
+               // console.log(j);
+                get4SquareInfo(p, callback, infowindow);
+                //j++;
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }
@@ -50,19 +54,50 @@ function initMap () {
 
 };
 
-function getYelpInfo(index) {
+function getVenue(venue) {
+    if(typeof venue === 'undefined') {
+        venue = "";
+    }
+    return venue;
+}
+function callback(data, infowindow) {
+    infowindow.setContent(data);
+}
+
+function get4SquareInfo(p, callback, infowindow) {
     /* CORS */
-    var yelpURL = 'https://api.yelp.com/v3/businesses/search?term='
-      +locationModel[index].title+'&location=92122&callback=yelpCallback';
+    var fourSquareURL = 'https://api.foursquare.com/v2/venues/search?ll=' + p.lat +
+    ',' + p.lng + '&client_id=' + id + '&client_secret=' + secret + '&v=20170826';
     $.ajax({
-        url: yelpURL,
-        dataType: "jsonp",
-        success: function(response) {
-            console.log(response);
+        url: fourSquareURL,
+        method: 'GET',
+        success: function(data) {
+            console.log(data);
+            var venues = data.response.venues[0];
+            var name = venues.name;
+            var category = venues.categories[0].name;
+            var phone = venues.contact.formattedPhone;
+            phone = getVenue(phone);
+            var url = venues.url;
+            url = getVenue(url);
+            var address = venues.location.formattedAddress;
+
+            var hereNow = venues.hereNow.summary;
+
+            var toAppend = "<div id='infowindow'><div id='name'><h5><b>" + name + "</b></h5></div>"
+                         + "<div id='category'><h6>" + category + "</h6></div>"
+                         + "<div id='content'><h6>" + phone + "</h6>"
+                         + "<h6>" + address + "</h6>"
+                         + "<a href=" + url+ "><h6>" + url + "</h6></a>"
+                         + "<h6>" + hereNow + "</h6></div></div>";
+            callback(toAppend,infowindow);
+        },
+        error: function(status) {
+            alert(status);
+            console.log("There was something going wrong while trying to retrieve data from foursquare.");
         }
 
     });
-
 };
 
 /*Function that takes an address and add a marker to the map based on the address*/

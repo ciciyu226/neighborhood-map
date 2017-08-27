@@ -12,14 +12,14 @@
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-md-3">
-        <input class="search" placeholder="Search" data-bind="">
-        <ul class="locationList" data-bind="foreach: locations">
-          <li>
-            <span data-bind="text: title"></span>
-            <button data-bind="click: $parent.isFavorite ,css: { favorite : $parent.favorite() }">X</button>
-          </li>
-        </ul>
+      <div class="col-md-3 left_column">
+          <div><input class="search" placeholder="Search" data-bind=""></div></br>
+          <div>
+            <ul class="locationList" data-bind="foreach: locations">
+              <li><div data-bind="text: $data"></div></li></br>
+            <!-- <button data-bind="click: $parent.isFavorite ,css: { favorite : $parent.favorite() }">X</button> -->
+            </ul>
+          </div>
       </div>
       <div class="col-md-9 map-container">
         <div id="map">
