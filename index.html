@@ -11,8 +11,8 @@
 </head>
 <body>
   <div class="container">
-    <div class="row">
-      <div class="col-md-3 left_column">
+    <div id="custom-row" class="row">
+      <div class="left_column col-md-3">
           <div><input class="search" placeholder="Search" data-bind=""></div></br>
           <div>
             <ul class="locationList" data-bind="foreach: locations">
@@ -21,7 +21,7 @@
             </ul>
           </div>
       </div>
-      <div class="col-md-9 map-container">
+      <div class="col-md-9" id="map-container">
         <div id="map">
         </div>
       </div>
