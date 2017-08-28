@@ -16,8 +16,10 @@
           <div><input class="search" placeholder="Search" data-bind=""></div></br>
           <div>
             <ul class="locationList" data-bind="foreach: locations">
-              <li><div data-bind="text: $data"></div></li></br>
-            <!-- <button data-bind="click: $parent.isFavorite ,css: { favorite : $parent.favorite() }">X</button> -->
+              <li>
+                  <span id="item_title" data-bind="text: $data"></span>
+                  <button id="remove_btn" data-bind="click: $parent.removePlace">X</button>
+             </li></br>
             </ul>
           </div>
       </div>

@@ -1,7 +1,9 @@
 'use strict';
 /* google map api */
 var map;
+var j = 0;
 var geocoder;
+var markers = [];
 var id = "JA1JE1NA11LXQTLLHAOEE4UDLVJF24C10ZROEBUAOGHIXRCH";
 var secret = "J21KG3AIBBI4E4XG4V04LKUTM4PTG32N34XC40ADSYPZUF0E";
 /* Function that initialize the map with existing locations in database*/
@@ -18,41 +20,66 @@ function initMap () {
     }, 8000);
 
     clearTimeout(mapRequestTimeout);
-    for(var i = 0; i < locationModel.length; i++){
+    var i;
+    for(i = 0; i < locationModel.length; i++){
         $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='
-          +locationModel[i]+'&sensor=false', null, function (data, status) {
-            if(status == 'success'){
-                var result = data.results[0];
-                var p = result.geometry.location;
-                var latlng = new google.maps.LatLng(p.lat, p.lng);
-                map.setCenter(latlng);
+          +locationModel[i]+'&sensor=false', (function(j) {
+              return function (data, status) {
+                if(status == 'success'){
+                    var result = data.results[0];
+                    var p = result.geometry.location;
+                    var latlng = new google.maps.LatLng(p.lat, p.lng);
+                    map.setCenter(latlng);
+                    /* create info window for current business */
+                    var infowindow = new google.maps.InfoWindow();
+                    /* create marker for current business */
+                    var marker = new google.maps.Marker({
+                      position: latlng,
+                      map: map,
+                      title: locationModel[j]
+                    });
+                    markers.push(marker);
+                    //marker.setMap(map);
+                    /* window pops up when user click marker */
 
+                    marker.addListener('click', function(){
+                        infowindow.open(map, marker);
+                    });
+                    // window pops up when user click list item
 
-                //console.log(toAppend);
-                /* create info window for current business */
-                var infowindow = new google.maps.InfoWindow();
-                /* create marker for current business */
-                var marker = new google.maps.Marker({
-                    position: latlng,
-                    map: map
-                });
+                   // console.log(j);
+                    get4SquareInfo(p, callback, infowindow);
 
-                /* window pops up when user click marker */
-                marker.addListener('click', function(){
-                infowindow.open(map, marker);
-                });
-               // console.log(j);
-                get4SquareInfo(p, callback, infowindow);
-                //j++;
-            } else {
-                alert('Geocode was not successful for the following reason: ' + status);
-            }
-        });
-
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+        }})(i));
     }
 
 
 };
+
+
+  // Sets the map on all markers in the array.
+
+
+  // Removes the markers from the map, but keeps them in the array.
+  function clearMarkers() {
+    setMapOnAll(null);
+  }
+
+  // Shows any markers currently in the array.
+  function showMarkers() {
+    setMapOnAll(map);
+  }
+
+  // Deletes all markers in the array by removing references to them.
+  function deleteMarkers() {
+    clearMarkers();
+    locationMarker = [];
+  }
+
+
 
 function getVenue(venue) {
     if(typeof venue === 'undefined') {
@@ -137,14 +164,25 @@ function codeAddress(address) {
 /* viewmodel for knockoutjs*/
 var ViewModel = function() {
     var self = this;
-    self.favorite = ko.observable(false);
     self.locations = ko.observableArray(locationModel);
-    // self.loc = ko.observable("");
-    /* function for adding new location */
-    self.isFavorite = function(){
-        self.favorite(!self.favorite());
 
+    self.removePlace = function(place) {
+        self.locations.remove(place);
+        for(var i = 0; i< markers.length; i++) {
+            console.log(markers[i].title);
+            console.log(place);
+            if(markers[i].title == place) {
+                markers[i].setMap(null);
+                markers.splice(i, 1);
+
+            }
+        }
+        for(var i = 0; i< markers.length; i++) {
+            markers[i].setMap(map);
+        }
     }
+
+
 }
 
 ko.applyBindings(new ViewModel());

@@ -19,7 +19,14 @@ html, body, ul, .container, .row, #map-container ,#map {
 #content {
   font-weight: 200;
 }
-
+/*#item_title {
+  padding-right: 20px;
+}*/
+#remove_btn {
+  float: right;
+  margin-right: 3px;
+  margin-top: -3px;
+}
 /*****class ******/
 .favorite {
     color: red;
