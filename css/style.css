@@ -19,14 +19,16 @@ html, body, ul, .container, .row, #map-container ,#map {
 #content {
   font-weight: 200;
 }
-/*#item_title {
-  padding-right: 20px;
-}*/
+
 #remove_btn {
   float: right;
-  margin-right: 3px;
-  margin-top: -3px;
+  margin-right: 1px;
+  margin-top: -2px;
+  padding-top: 0;
+  padding-bottom: 1px;
+  background-color: #9dc695;
 }
+
 /*****class ******/
 .favorite {
     color: red;
@@ -38,7 +40,7 @@ html, body, ul, .container, .row, #map-container ,#map {
 }
 
 .search {
-  width: 100%;
+  width: 85%;
   margin-top: 10px;
   padding-left: 7px;
   border: 2px solid white;
@@ -51,3 +53,4 @@ html, body, ul, .container, .row, #map-container ,#map {
     border: 2px solid white;
     padding: 5px 0 5px 6px;
 }
+
