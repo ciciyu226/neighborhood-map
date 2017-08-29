@@ -8,7 +8,7 @@
   - The location list can be filtered based on user input in the search bar. Markers get update when locations are filtered.
   - User can add or remove a location and its marker. 
   - The display is responsive to all screen sizes. 
-### Tools Used:
+### Tools used:
   - HTML, CSS, Javascript
   - Knockoutjs
   - Google map API
