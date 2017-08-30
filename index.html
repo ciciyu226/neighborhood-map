@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Neighborhood Map</title>
   <!-- link to css stylesheet -->
   <link href="css/style.css" rel="stylesheet">
@@ -16,13 +17,13 @@
           <div class="top-bar">
               <input class="search" placeholder="Search" data-bind="value: enteredLoc, valueUpdate: 'input'" >
                <button id="add-btn" data-bind="click: addLocation"> + </button>
-          </div></br>
+          </div><br>
           <div>
             <ul class="locationList" data-bind="foreach: filteredLocations">
               <li>
                   <span id="item-title" data-bind="text: $data.name, click: $parent.AnimateMarkerAndOpenWindow"></span>
                   <button id="remove_btn" data-bind="click: $parent.removeLocation">X</button>
-             </li></br>
+             </li>
             </ul>
           </div>
       </div>
@@ -38,7 +39,7 @@
   <script src="js/jQuery.js" type="text/javascript"></script>
   <script src="js/locations.js" type="text/javascript"></script>
   <script src="js/app.js" type="text/javascript"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG-Djom1wOjKEWcwl_i1Way7Xuxn5igQI&callback=startApp"
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBG-Djom1wOjKEWcwl_i1Way7Xuxn5igQI&callback=startApp" onerror="mapErrorHandler()"
     async defer></script>
 </body>
 </html>

@@ -49,10 +49,9 @@ var Location = function(data) {
     this.marker.addListener("click", function(){
         //add marker animation
         self.marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function() {self.marker.setAnimation(null);}, 2000);
+        setTimeout(function() {self.marker.setAnimation(null);}, 2100);
         self.infowindow.open(map, self.marker);
     });
-
 };
 
 
@@ -124,8 +123,8 @@ var ViewModel = function() {
         }
         if(!exist){
             $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address=" +
-               self.enteredLoc() +"&sensor=false", null,  function(data, status) {
-                if(status == "success") {
+               self.enteredLoc() +"&sensor=false", null)
+               .done(function(data) {
                     var location = {
                         title: self.enteredLoc(),
                         lat: data.results[0].geometry.location.lat,
@@ -133,12 +132,13 @@ var ViewModel = function() {
                     };
                     locationModel.push(location);
                     self.locations().push(new Location(location));
-                }else {
-                    alert("Error creating marker.");
-                }
-            });
+                })
+               .fail(function() {
+                    alert("Error getting geocode information.");
+                });
         }
     };
+
     this.removeLocation = function(location) {
         location.marker.setVisible(false);
         self.locations.remove(location);
@@ -173,6 +173,11 @@ var ViewModel = function() {
 
     };
 };
+
 function startApp(){
     ko.applyBindings(new ViewModel());
+}
+
+function mapErrorHandler() {
+    alert("Google map failed to load, please refresh to try again.");
 }

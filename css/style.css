@@ -51,8 +51,9 @@ html, body, ul, .container, .row, #map-container ,#map {
 }
 
 .search {
-  width: 87%;
-  margin-top: 10px;
+  width: 85%;
+  margin-top: 15px;
+  margin-bottom: 5px;
   padding-left: 7px;
   border: 2px solid white;
 }
@@ -63,6 +64,7 @@ html, body, ul, .container, .row, #map-container ,#map {
     cursor: pointer;
     border: 2px solid white;
     padding: 5px 0 5px 6px;
+    margin-bottom: 20px;
     font-size: 18px;
 }
 
