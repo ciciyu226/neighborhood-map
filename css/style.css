@@ -12,6 +12,11 @@ html, body, ul, .container, .row, #map-container ,#map {
 #custom-row {
   margin: auto;
 }
+#custom-container {
+  width: 100%;
+  padding: 0;
+}
+
 #infowindow {
   text-align: center;
   width: 200px;
@@ -28,7 +33,10 @@ html, body, ul, .container, .row, #map-container ,#map {
   padding-bottom: 1px;
   background-color: #9dc695;
 }
-
+#add-btn {
+  padding-left: 9px;
+  padding-right: 9px;
+}
 /*****class ******/
 .favorite {
     color: red;
@@ -38,9 +46,12 @@ html, body, ul, .container, .row, #map-container ,#map {
   height: 100%;
   padding-left: 15px;
 }
+.top-bar {
+  font-size: 18px;
+}
 
 .search {
-  width: 85%;
+  width: 87%;
   margin-top: 10px;
   padding-left: 7px;
   border: 2px solid white;
@@ -52,5 +63,6 @@ html, body, ul, .container, .row, #map-container ,#map {
     cursor: pointer;
     border: 2px solid white;
     padding: 5px 0 5px 6px;
+    font-size: 18px;
 }
 

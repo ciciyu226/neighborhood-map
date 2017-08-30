@@ -1,22 +1,22 @@
-'use strict';
+"use strict";
 /* google map api */
 var map;
 var id = "JA1JE1NA11LXQTLLHAOEE4UDLVJF24C10ZROEBUAOGHIXRCH";
 var secret = "J21KG3AIBBI4E4XG4V04LKUTM4PTG32N34XC40ADSYPZUF0E";
 /* Function that initialize the map with existing locations in database*/
 var initMap = function() {
-    map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById("map"), {
           center: {lat: 32.76, lng: -117.16},
           zoom: 11
     });
     /* error handling*/
     var mapRequestTimeout = setTimeout(function(){
-    $('#map').text("Failed to load google map.");
+    $("#map").text("Failed to load google map.");
     }, 8000);
 
     clearTimeout(mapRequestTimeout);
 
-}
+};
 //location constructor
 var Location = function(data) {
     var self = this;
@@ -34,20 +34,20 @@ var Location = function(data) {
         position: new google.maps.LatLng(this.lat, this.lng),
         map: map,
         title: this.name
-    })
+    });
     //animate marker and open infowindow when this marker is clicked
-    this.marker.addListener('click', function(){
+    this.marker.addListener("click", function(){
         //add marker animation
         self.marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function() {self.marker.setAnimation(null)}, 2000);
+        setTimeout(function() {self.marker.setAnimation(null);}, 2000);
         self.infowindow.open(map, self.marker);
     });
 
-}
+};
 
 
 function getVenue(venue) {
-    if(typeof venue === 'undefined') {
+    if(typeof venue === "undefined") {
         venue = "";
     }
     return venue;
@@ -56,11 +56,11 @@ function getVenue(venue) {
 
 function getAndSet4SquareInfo(searchedName, lat, lng, infowindow) {
     /* CORS */
-    var fourSquareURL = 'https://api.foursquare.com/v2/venues/search?ll=' + lat +
-    ',' + lng + '&client_id=' + id + '&client_secret=' + secret + '&v=20170826';
+    var fourSquareURL = "https://api.foursquare.com/v2/venues/search?ll=" + lat +
+    "," + lng + "&client_id=" + id + "&client_secret=" + secret + "&v=20170826";
     $.ajax({
         url: fourSquareURL,
-        method: 'GET',
+        method: "GET",
         success: function(data) {
             console.log(data);
             var venues = data.response.venues[0];
@@ -89,7 +89,7 @@ function getAndSet4SquareInfo(searchedName, lat, lng, infowindow) {
         }
 
     });
-};
+}
 
 
 /* viewmodel for knockoutjs*/
@@ -99,7 +99,7 @@ var ViewModel = function() {
     self.locations = ko.observableArray([]);
     locationModel.forEach(function(location) {
         self.locations().push(new Location(location));
-    })
+    });
     this.enteredLoc = ko.observable("");
 
 
@@ -113,9 +113,9 @@ var ViewModel = function() {
             }
         }
         if(!exist){
-            $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address='
-              + self.enteredLoc() +'&sensor=false', null,  function(data, status) {
-                if(status == 'success') {
+            $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address="
+              + self.enteredLoc() +"&sensor=false", null,  function(data, status) {
+                if(status == "success") {
                     var location = {
                         title: self.enteredLoc(),
                         lat: data.results[0].geometry.location.lat,

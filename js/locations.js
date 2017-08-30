@@ -20,7 +20,7 @@ var locationModel = [
     lng: -117.21067441244253
 },
 {
-    title: "UCSD",
+    title: "University of California, San Diego",
     lat: 32.87979301300122,
     lng:  -117.2389196551706
 },

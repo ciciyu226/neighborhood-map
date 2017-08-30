@@ -10,12 +10,12 @@
 
 </head>
 <body>
-  <div class="container">
+  <div id="custom-container" class="container">
     <div id="custom-row" class="row">
       <div class="left_column col-md-3">
-          <div>
+          <div class="top-bar">
               <input class="search" placeholder="Search" data-bind="value: enteredLoc, valueUpdate: 'input'" >
-               <button data-bind="click: addLocation"> + </button>
+               <button id="add-btn" data-bind="click: addLocation"> + </button>
           </div></br>
           <div>
             <ul class="locationList" data-bind="foreach: filteredLocations">
