@@ -1,4 +1,14 @@
-"use strict";
+// Hello.
+//
+// This is JSHint, a tool that helps to detect errors and potential
+// problems in your JavaScript code.
+//
+// To start, simply enter some JavaScript anywhere on this page. Your
+// report will appear on the right side.
+//
+// Additionally, you can toggle specific options in the Configure
+// menu.
+
 /* google map api */
 var map;
 var id = "JA1JE1NA11LXQTLLHAOEE4UDLVJF24C10ZROEBUAOGHIXRCH";
@@ -74,13 +84,13 @@ function getAndSet4SquareInfo(searchedName, lat, lng, infowindow) {
 
             var hereNow = venues.hereNow.summary;
 
-            var toAppend = "<div id='infowindow'><div id='name'><h5><b>" + name + "</b></h5></div>"
-                         + "<div id='content'><h6>(search name: " + searchedName + ")</h6></div>"
-                         + "<div id='category'><h6>" + category + "</h6></div>"
-                         + "<div id='content'><h6>" + phone + "</h6>"
-                         + "<h6>" + address + "</h6>"
-                         + "<a href=" + url+ "><h6>" + url + "</h6></a>"
-                         + "<h6>" + hereNow + "</h6></div></div>";
+            var toAppend = "<div id='infowindow'><div id='name'><h5><b>" + name + "</b></h5></div>" +
+                                     "<div id='content'><h6>(search name: " + searchedName + ")</h6></div>" +
+                                     "<div id='category'><h6>" + category + "</h6></div>" +
+                           "<div id='content'><h6>" + phone + "</h6>" +
+                           "<h6>" + address + "</h6>" +
+                           "<a href=" + url+ "><h6>" + url + "</h6></a>" +
+                           "<h6>" + hereNow + "</h6></div></div>";
             infowindow.setContent(toAppend);
         },
         error: function(status) {
@@ -113,8 +123,8 @@ var ViewModel = function() {
             }
         }
         if(!exist){
-            $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address="
-              + self.enteredLoc() +"&sensor=false", null,  function(data, status) {
+            $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address=" +
+               self.enteredLoc() +"&sensor=false", null,  function(data, status) {
                 if(status == "success") {
                     var location = {
                         title: self.enteredLoc(),
@@ -126,20 +136,20 @@ var ViewModel = function() {
                 }else {
                     alert("Error creating marker.");
                 }
-            })
+            });
         }
-    }
+    };
     this.removeLocation = function(location) {
         location.marker.setVisible(false);
         self.locations.remove(location);
-    }
+    };
 
     this.filteredLocations = ko.computed(function() {
         var filter = self.enteredLoc().toLowerCase();
         if(!filter) {
             self.locations().forEach(function(location) {
                 location.marker.setVisible(true);
-            })
+            });
             return self.locations();
         }else {
             return ko.utils.arrayFilter(self.locations(), function(location) {
@@ -152,17 +162,17 @@ var ViewModel = function() {
                     location.marker.setVisible(false);
                 }
                 return result;
-            })
+            });
         }
     }, self);
 
     this.AnimateMarkerAndOpenWindow = function(location) {
         location.marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function() {location.marker.setAnimation(null)}, 2000);
+        setTimeout(function() {location.marker.setAnimation(null);}, 2000);
         location.infowindow.open(map, location.marker);
 
-    }
-}
+    };
+};
 function startApp(){
     ko.applyBindings(new ViewModel());
 }
