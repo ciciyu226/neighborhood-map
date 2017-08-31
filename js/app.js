@@ -71,18 +71,19 @@ function getAndSet4SquareInfo(searchedName, lat, lng, infowindow) {
         url: fourSquareURL,
         method: "GET",
         success: function(data) {
-            console.log(data);
             var venues = data.response.venues[0];
             var name = venues.name;
             var category = venues.categories[0].name;
             var phone = venues.contact.formattedPhone;
-            phone = getVenue(phone);
             var url = venues.url;
-            url = getVenue(url);
             var address = venues.location.formattedAddress;
-
             var hereNow = venues.hereNow.summary;
-
+            name = getVenue(name);
+            category= getVenue(category);
+            phone = getVenue(phone);
+            url = getVenue(url);
+            address = getVenue(address);
+            hereNow = getVenue(hereNow);
             var toAppend = "<div id='infowindow'><div id='name'><h5><b>" + name + "</b></h5></div>" +
                                      "<div id='content'><h6>(search name: " + searchedName + ")</h6></div>" +
                                      "<div id='category'><h6>" + category + "</h6></div>" +
@@ -92,9 +93,8 @@ function getAndSet4SquareInfo(searchedName, lat, lng, infowindow) {
                            "<h6>" + hereNow + "</h6></div></div>";
             infowindow.setContent(toAppend);
         },
-        error: function(status) {
-            alert(status);
-            console.log("There was something going wrong while trying to retrieve data from foursquare.");
+        error: function() {
+            alert("There was something wrong while trying to retrieve data from Foursquare.");
         }
 
     });
@@ -117,11 +117,13 @@ var ViewModel = function() {
         var exist = false;
         for(var i = 0; i< self.locations().length; i++) {
             if(self.locations()[i].name.toLowerCase() == self.enteredLoc().toLowerCase()) {
+                $("#hint-msg").text("Location " + self.enteredLoc() + " is already exist");
+                $("#hint-msg").css("color","red");
                 exist = true;
                 break;
             }
         }
-        if(!exist){
+        if(!exist && self.enteredLoc() != ""){
             $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address=" +
                self.enteredLoc() +"&sensor=false", null)
                .done(function(data) {
@@ -132,8 +134,13 @@ var ViewModel = function() {
                     };
                     locationModel.push(location);
                     self.locations().push(new Location(location));
+                    $("#hint-msg").text("Location " + self.enteredLoc() + " is successfully added!");
+                    $("#hint-msg").css("color","#66a0ff");
+                    map.setCenter(new google.maps.LatLng(location.lat, location.lng));
                 })
                .fail(function() {
+                    $("#hint-msg").text("Location " + self.enteredLoc() + "is failed to add.");
+                    $("#hint-msg").css("color","red");
                     alert("Error getting geocode information.");
                 });
         }

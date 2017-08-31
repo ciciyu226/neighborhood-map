@@ -17,7 +17,8 @@
           <div class="top-bar">
               <input class="search" placeholder="Search" data-bind="value: enteredLoc, valueUpdate: 'input'" >
                <button id="add-btn" data-bind="click: addLocation"> + </button>
-          </div><br>
+               <p id="hint-msg"></p>
+          </div>
           <div>
             <ul class="locationList" data-bind="foreach: filteredLocations">
               <li>

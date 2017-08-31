@@ -37,6 +37,7 @@ html, body, ul, .container, .row, #map-container ,#map {
   padding-left: 9px;
   padding-right: 9px;
 }
+
 /*****class ******/
 .favorite {
     color: red;
@@ -53,7 +54,7 @@ html, body, ul, .container, .row, #map-container ,#map {
 .search {
   width: 85%;
   margin-top: 15px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   padding-left: 7px;
   border: 2px solid white;
 }
