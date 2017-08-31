@@ -123,7 +123,7 @@ var ViewModel = function() {
                 break;
             }
         }
-        if(!exist && self.enteredLoc() != ""){
+        if(!exist && self.enteredLoc() !== ""){
             $.getJSON("http://maps.googleapis.com/maps/api/geocode/json?address=" +
                self.enteredLoc() +"&sensor=false", null)
                .done(function(data) {
