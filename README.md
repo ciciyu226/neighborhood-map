@@ -1,6 +1,9 @@
 # My Neighborhood Map
 ## Author: Cici Yu
 ### This is a udacity project intended to use various APIs to build a web app that shows my neighborhood interests on map.
+
+Play with it here: https://ciciyu226.github.io/neighborhood-map
+
 ### Features: 
   - It maps the locations in the input list onto google map. Each mapped location has a marker on the map indicate its location. 
   - When user clicks either a location name in list or its marker on the map, the marker bounces and shows a infowindow. 
@@ -13,7 +16,7 @@
   - Knockoutjs
   - Google map API
   - Foursquare API
-### How to run it?
+### How to run it? (locally)
   1. Clone or download this repositary to your computer by clicking the green "clone or download" button on the top right corner.
   2. Open index.html with your favorite browser. 
   
